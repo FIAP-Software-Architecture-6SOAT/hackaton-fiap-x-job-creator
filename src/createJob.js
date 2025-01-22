@@ -15,7 +15,7 @@ const eksClient = new EKSClient({
   },
 });
 
-export const createJob = async (key) => {
+export const createJob = async (key, videoId) => {
   try {
     // Obter detalhes do cluster EKS
     const describeClusterCommand = new DescribeClusterCommand({
@@ -87,6 +87,10 @@ export const createJob = async (key) => {
                   value: key,
                 },
                 {
+                  name: 'VIDEO_ID',
+                  value: videoId,
+                },
+                {
                   name: 'AWS_ACCESS_KEY_ID',
                   value: process.env.AWS_ACCESS_KEY_ID,
                 },
@@ -97,6 +101,14 @@ export const createJob = async (key) => {
                 {
                   name: 'AWS_SESSION_TOKEN',
                   value: process.env.AWS_SESSION_TOKEN,
+                },
+                {
+                  name: 'MONGODB_CONNECTION_STRING',
+                  value: process.env.MONGODB_CONNECTION_STRING,
+                },
+                {
+                  name: 'MONGODB_DB_NAME',
+                  value: process.env.MONGODB_DB_NAME,
                 },
               ],
               resources: {

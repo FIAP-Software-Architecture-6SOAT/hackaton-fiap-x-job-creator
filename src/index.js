@@ -24,9 +24,9 @@ const pollSQS = async () => {
 
     if (data.Messages) {
       for (const message of data.Messages) {
-        const { key } = JSON.parse(message.Body);
+        const { key, videoId } = JSON.parse(message.Body);
 
-        const createdJob = await createJob(key);
+        const createdJob = await createJob(key, videoId);
 
         if (createdJob) {
           const deleteMessageCommand = new DeleteMessageCommand({
@@ -47,8 +47,7 @@ const pollSQS = async () => {
 
 const startPolling = () => {
   console.log('Listening for messages on SQS...');
-  // setInterval(pollSQS, 10000); // Poll SQS a cada 10 segundos
-  setInterval(pollSQS, 1000); // Poll SQS a cada 1 segundos
+  setInterval(pollSQS, 5000); // Poll SQS a cada 5 segundos
 };
 
 startPolling();
