@@ -1,0 +1,7 @@
+node_modules
+.env
+notes.txt
+
+# Coverage directory used by tools like istanbul
+coverage
+*.lcov

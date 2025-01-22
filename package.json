@@ -1,0 +1,16 @@
+{
+    "name": "fiap-x-job-creator",
+    "version": "1.0.0",
+    "description": "fiap-x-job-creator",
+    "type": "module",
+    "main": "src/index.js",
+    "scripts": {
+        "start": "node src/index.js"
+    },
+    "dependencies": {
+        "@aws-sdk/client-eks": "^3.731.1",
+        "@aws-sdk/client-sqs": "^3.731.1",
+        "@kubernetes/client-node": "^1.0.0"
+    },
+    "author": "Danilo Cassola"
+}

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fiap-x-sqs-listener-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fiap-x-sqs-listener
+  template:
+    metadata:
+      labels:
+        app: fiap-x-sqs-listener
+    spec:
+      containers:
+      - name: fiap-x-sqs-listener
+        image: danilocassola/fiap-x-job-creator:v1.2
+        env:
+        - name: QUEUE_URL
+          valueFrom:
+                secretKeyRef:
+                  name: fiap-x-sqs-listener-app-secrets
+                  key: QUEUE_URL
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: fiap-x-sqs-listener-app-secrets
+              key: AWS_ACCESS_KEY_ID
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: fiap-x-sqs-listener-app-secrets
+              key: AWS_SECRET_ACCESS_KEY
+        - name: AWS_SESSION_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: fiap-x-sqs-listener-app-secrets
+              key: AWS_SESSION_TOKEN
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "100m" 
