@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: fiap-x-job-creator
-        image: danilocassola/fiap-x-job-creator:v1.2
+        image: danilocassola/fiap-x-job-creator:v1
         env:
         - name: QUEUE_URL
           valueFrom:
@@ -36,6 +36,16 @@ spec:
             secretKeyRef:
               name: fiap-x-job-creator-app-secrets
               key: AWS_SESSION_TOKEN
+        - name: AWS_ACCESS_KEY_ID_SES
+          valueFrom:
+            secretKeyRef:
+              name: fiap-x-job-creator-app-secrets
+              key: AWS_ACCESS_KEY_ID_SES
+        - name: AWS_SECRET_ACCESS_KEY_SES
+          valueFrom:
+            secretKeyRef:
+              name: fiap-x-job-creator-app-secrets
+              key: AWS_SECRET_ACCESS_KEY_SES
         - name: MONGODB_CONNECTION_STRING
           valueFrom:
             secretKeyRef:
