@@ -5,12 +5,30 @@
     "type": "module",
     "main": "src/index.js",
     "scripts": {
-        "start": "node src/index.js"
+        "start": "node src/index.js",
+        "test": "jest --config jest.config.cjs",
+        "test:detect-open-handles": "jest --config jest.config.cjs --detectOpenHandles",
+        "test:watch": "jest --config jest.config.cjs --watch",
+        "test:coverage": "jest --config jest.config.cjs --coverage",
+        "ci:test": ".scripts/ci_test_coverage.sh"
     },
     "dependencies": {
         "@aws-sdk/client-eks": "^3.731.1",
         "@aws-sdk/client-sqs": "^3.731.1",
-        "@kubernetes/client-node": "^1.0.0"
+        "@kubernetes/client-node": "^1.0.0",
+        "@jest/globals": "^29.7.0",
+        "pino": "^9.0.0",
+        "pino-pretty": "^11.0.0"
+    },
+    "devDependencies": {
+        "jest": "^29.7.0",
+        "@babel/preset-env": "^7.15.8",
+        "babel-jest": "^27.3.1"
+    },
+    "jest": {
+        "transform": {
+            "^.+\\.jsx?$": "babel-jest"
+        }
     },
     "author": "Danilo Cassola"
 }

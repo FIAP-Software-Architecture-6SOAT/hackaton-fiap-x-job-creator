@@ -1,5 +1,6 @@
 import { SQSClient, ReceiveMessageCommand, DeleteMessageCommand } from '@aws-sdk/client-sqs';
 import { createJob } from './createJob.js';
+import logger from './logger.js';
 
 const sqsClient = new SQSClient({
   region: 'us-east-1',
@@ -35,18 +36,18 @@ const pollSQS = async () => {
           });
   
           await sqsClient.send(deleteMessageCommand);
-          console.log(`Message deleted: ${message.MessageId}`);
+          logger.info(`Message deleted: ${message.MessageId}`);
         }
 
       }
     }
   } catch (error) {
-    console.error(`Error polling SQS: ${error.message}`);
+    logger.error(`Error polling SQS: ${error.message}`);
   }
 };
 
-const startPolling = () => {
-  console.log('Listening for messages on SQS...');
+export const startPolling = () => {
+  logger.info('Listening for messages on SQS...');
   setInterval(pollSQS, 5000); // Poll SQS a cada 5 segundos
 };
 

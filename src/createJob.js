@@ -1,6 +1,7 @@
 import { DescribeClusterCommand } from '@aws-sdk/client-eks';
 import * as k8s from '@kubernetes/client-node';
 import { EKSClient } from '@aws-sdk/client-eks';
+import logger from './logger.js';
 
 const REGION = 'us-east-1';
 const CLUSTERNAME = 'prod-fiap-x-cluster';
@@ -144,10 +145,10 @@ export const createJob = async (videoId) => {
     // Criar o Job no Kubernetes no namespace 'default'
     const namespace = 'default';
     const response = await k8sBatchApi.createNamespacedJob({ namespace, body: job });
-    console.log('Job created:', response);
+    logger.info('Job created:', response);
     return true;
   } catch (error) {
-    console.error(`Error creating job: ${error.message}`);
+    logger.error(`Error creating job: ${error.message}`);
     return false;
   }
 };
