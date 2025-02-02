@@ -1,6 +1,6 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: fiap-x-sqs-listener-app-config
+  name: fiap-x-job-creator-app-config
 data:
   NODE_ENV: production
