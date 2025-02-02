@@ -114,6 +114,14 @@ export const createJob = async (videoId) => {
                   name: 'MONGODB_DB_NAME',
                   value: process.env.MONGODB_DB_NAME,
                 },
+                {
+                  name: 'BUCKET_VIDEOS_NAME',
+                  value: process.env.BUCKET_VIDEOS_NAME,
+                },
+                {
+                  name: 'BUCKET_IMAGES_ZIP_NAME',
+                  value: process.env.BUCKET_IMAGES_ZIP_NAME,
+                },
               ],
               resources: {
                 requests: {
