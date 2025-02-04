@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Run Jest tests with coverage
-jest --coverage --coverageReporters=json-summary || exit 1
+jest --config jest.config.mjs --coverage --coverageReporters=json-summary || exit 1
 
 # Extract the coverage percentage from the output
 coverage=$(jq -r '.total.lines.pct' ./coverage/coverage-summary.json)
