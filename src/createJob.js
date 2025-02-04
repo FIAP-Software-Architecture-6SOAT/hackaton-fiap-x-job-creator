@@ -4,7 +4,7 @@ import { EKSClient } from '@aws-sdk/client-eks';
 
 const REGION = 'us-east-1';
 const CLUSTERNAME = 'prod-fiap-x-cluster';
-const DOCKER_IMAGE = 'danilocassola/fiap-x-video-processor:v1.1';
+const DOCKER_IMAGE = 'danilocassola/fiap-x-video-processor:v1';
 
 const eksClient = new EKSClient({
   region: REGION,
@@ -15,7 +15,7 @@ const eksClient = new EKSClient({
   },
 });
 
-export const createJob = async (key) => {
+export const createJob = async (videoId) => {
   try {
     // Obter detalhes do cluster EKS
     const describeClusterCommand = new DescribeClusterCommand({
@@ -83,8 +83,8 @@ export const createJob = async (key) => {
               command: ['/bin/sh', '-c', 'npm run process-video'],
               env: [
                 {
-                  name: 'VIDEO_NAME',
-                  value: key,
+                  name: 'VIDEO_ID',
+                  value: videoId,
                 },
                 {
                   name: 'AWS_ACCESS_KEY_ID',
@@ -97,6 +97,30 @@ export const createJob = async (key) => {
                 {
                   name: 'AWS_SESSION_TOKEN',
                   value: process.env.AWS_SESSION_TOKEN,
+                },
+                {
+                  name: 'AWS_ACCESS_KEY_ID_SES',
+                  value: process.env.AWS_ACCESS_KEY_ID_SES,
+                },
+                {
+                  name: 'AWS_SECRET_ACCESS_KEY_SES',
+                  value: process.env.AWS_SECRET_ACCESS_KEY_SES,
+                },
+                {
+                  name: 'MONGODB_CONNECTION_STRING',
+                  value: process.env.MONGODB_CONNECTION_STRING,
+                },
+                {
+                  name: 'MONGODB_DB_NAME',
+                  value: process.env.MONGODB_DB_NAME,
+                },
+                {
+                  name: 'BUCKET_VIDEOS_NAME',
+                  value: process.env.BUCKET_VIDEOS_NAME,
+                },
+                {
+                  name: 'BUCKET_IMAGES_ZIP_NAME',
+                  value: process.env.BUCKET_IMAGES_ZIP_NAME,
                 },
               ],
               resources: {

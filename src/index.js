@@ -24,9 +24,9 @@ const pollSQS = async () => {
 
     if (data.Messages) {
       for (const message of data.Messages) {
-        const { key } = JSON.parse(message.Body);
+        const { videoId } = JSON.parse(message.Body);
 
-        const createdJob = await createJob(key);
+        const createdJob = await createJob(videoId);
 
         if (createdJob) {
           const deleteMessageCommand = new DeleteMessageCommand({
