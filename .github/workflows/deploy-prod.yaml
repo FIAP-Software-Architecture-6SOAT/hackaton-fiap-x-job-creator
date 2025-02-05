@@ -3,7 +3,6 @@ name: Deploy Prod
 on:
   push:
     branches: ["main"]
-    paths:  ['src/**', '.github/workflows/deploy-prod.yaml']
   workflow_dispatch:
 
 jobs:

@@ -4,7 +4,6 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
     branches: ["main"]
-    paths: ['src/**', '.github/workflows/ci-deploy-simulation-prod.yaml']
   workflow_dispatch:
 
 jobs:
