@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: fiap-x-job-creator
-        image: danilocassola/fiap-x-job-creator:v1.4
+        image: danilocassola/fiap-x-job-creator:v1
         env:
         - name: QUEUE_URL
           valueFrom:
