@@ -7,6 +7,7 @@ export const produto: Config.InitialProjectOptions = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
+  setupFiles: ['<rootDir>/src/test/setupTests.ts'],
 };
 
 const config: Config.InitialOptions = {
