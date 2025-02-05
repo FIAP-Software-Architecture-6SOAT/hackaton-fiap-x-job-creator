@@ -8,9 +8,14 @@ Secrets cadastradas no repositório do GitHub
 AWS_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY
 AWS_SESSION_TOKEN
+AWS_ACCESS_KEY_ID_SES
+AWS_SECRET_ACCESS_KEY_SES
 DOCKERHUB_TOKEN
 MONGODB_CONNECTION_STRING
 MONGODB_DB_NAME
+QUEUE_URL
+BUCKET_VIDEOS_NAME
+BUCKET_IMAGES_ZIP_NAME
 ```
 
 ## Como rodar o projeto local?
@@ -23,3 +28,8 @@ docker compose up
 ```bash
 docker compose down
 ```
+<br />
+
+## Evidência de cobertura de testes
+
+![Evidência de cobertura de testes](coverage.jpg)
