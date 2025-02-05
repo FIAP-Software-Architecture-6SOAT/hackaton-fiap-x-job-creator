@@ -1,6 +1,8 @@
-import { DescribeClusterCommand } from '@aws-sdk/client-eks';
+import { DescribeClusterCommand, EKSClient } from '@aws-sdk/client-eks';
 import * as k8s from '@kubernetes/client-node';
-import { EKSClient } from '@aws-sdk/client-eks';
+
+import { ENV } from './config';
+import { logger } from './logger';
 
 const REGION = 'us-east-1';
 const CLUSTERNAME = 'prod-fiap-x-cluster';
@@ -9,13 +11,13 @@ const DOCKER_IMAGE = 'danilocassola/fiap-x-video-processor:v1';
 const eksClient = new EKSClient({
   region: REGION,
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    sessionToken: process.env.AWS_SESSION_TOKEN,
+    accessKeyId: ENV.AWS_ACCESS_KEY_ID,
+    secretAccessKey: ENV.AWS_SECRET_ACCESS_KEY,
+    sessionToken: ENV.AWS_SESSION_TOKEN,
   },
 });
 
-export const createJob = async (videoId) => {
+export const createJob = async (videoId: string): Promise<boolean> => {
   try {
     // Obter detalhes do cluster EKS
     const describeClusterCommand = new DescribeClusterCommand({
@@ -24,8 +26,8 @@ export const createJob = async (videoId) => {
     const clusterData = await eksClient.send(describeClusterCommand);
 
     const { cluster } = clusterData;
-    const clusterEndpoint = cluster.endpoint;
-    const clusterCA = cluster.certificateAuthority.data;
+    const clusterEndpoint = cluster?.endpoint;
+    const clusterCA = cluster?.certificateAuthority?.data;
 
     // Configurar o kubeconfig
     const kubeconfig = new k8s.KubeConfig();
@@ -88,39 +90,39 @@ export const createJob = async (videoId) => {
                 },
                 {
                   name: 'AWS_ACCESS_KEY_ID',
-                  value: process.env.AWS_ACCESS_KEY_ID,
+                  value: ENV.AWS_ACCESS_KEY_ID,
                 },
                 {
                   name: 'AWS_SECRET_ACCESS_KEY',
-                  value: process.env.AWS_SECRET_ACCESS_KEY,
+                  value: ENV.AWS_SECRET_ACCESS_KEY,
                 },
                 {
                   name: 'AWS_SESSION_TOKEN',
-                  value: process.env.AWS_SESSION_TOKEN,
+                  value: ENV.AWS_SESSION_TOKEN,
                 },
                 {
                   name: 'AWS_ACCESS_KEY_ID_SES',
-                  value: process.env.AWS_ACCESS_KEY_ID_SES,
+                  value: ENV.AWS_ACCESS_KEY_ID_SES,
                 },
                 {
                   name: 'AWS_SECRET_ACCESS_KEY_SES',
-                  value: process.env.AWS_SECRET_ACCESS_KEY_SES,
+                  value: ENV.AWS_SECRET_ACCESS_KEY_SES,
                 },
                 {
                   name: 'MONGODB_CONNECTION_STRING',
-                  value: process.env.MONGODB_CONNECTION_STRING,
+                  value: ENV.MONGODB_CONNECTION_STRING,
                 },
                 {
                   name: 'MONGODB_DB_NAME',
-                  value: process.env.MONGODB_DB_NAME,
+                  value: ENV.MONGODB_DB_NAME,
                 },
                 {
                   name: 'BUCKET_VIDEOS_NAME',
-                  value: process.env.BUCKET_VIDEOS_NAME,
+                  value: ENV.BUCKET_VIDEOS_NAME,
                 },
                 {
                   name: 'BUCKET_IMAGES_ZIP_NAME',
-                  value: process.env.BUCKET_IMAGES_ZIP_NAME,
+                  value: ENV.BUCKET_IMAGES_ZIP_NAME,
                 },
               ],
               resources: {
@@ -141,13 +143,16 @@ export const createJob = async (videoId) => {
       backoffLimit: 4,
     };
 
-    // Criar o Job no Kubernetes no namespace 'default'
     const namespace = 'default';
-    const response = await k8sBatchApi.createNamespacedJob({ namespace, body: job });
-    console.log('Job created:', response);
+    await k8sBatchApi.createNamespacedJob({ namespace, body: job });
+    logger.info('Job created: %s', metadata.name);
     return true;
   } catch (error) {
-    console.error(`Error creating job: ${error.message}`);
+    if (error instanceof Error) {
+      logger.error(`Error creating job: ${error.message}`);
+    } else {
+      logger.error('Error creating job: %s', error);
+    }
     return false;
   }
 };
