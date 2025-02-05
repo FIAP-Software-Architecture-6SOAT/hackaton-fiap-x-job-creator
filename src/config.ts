@@ -1,0 +1,14 @@
+import { env } from 'node:process';
+
+export const ENV = {
+  AWS_ACCESS_KEY_ID: env.AWS_ACCESS_KEY_ID as string,
+  AWS_SECRET_ACCESS_KEY: env.AWS_SECRET_ACCESS_KEY as string,
+  AWS_SESSION_TOKEN: env.AWS_SESSION_TOKEN as string,
+  MONGODB_CONNECTION_STRING: env.MONGODB_CONNECTION_STRING as string,
+  MONGODB_DB_NAME: env.MONGODB_DB_NAME as string,
+  QUEUE_URL: env.QUEUE_URL as string,
+  AWS_ACCESS_KEY_ID_SES: env.AWS_ACCESS_KEY_ID_SES as string,
+  AWS_SECRET_ACCESS_KEY_SES: env.AWS_SECRET_ACCESS_KEY_SES as string,
+  BUCKET_VIDEOS_NAME: env.BUCKET_VIDEOS_NAME as string,
+  BUCKET_IMAGES_ZIP_NAME: env.BUCKET_IMAGES_ZIP_NAME as string,
+};

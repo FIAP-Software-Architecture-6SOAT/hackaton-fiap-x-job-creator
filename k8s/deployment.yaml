@@ -56,10 +56,20 @@ spec:
             secretKeyRef:
               name: fiap-x-job-creator-app-secrets
               key: MONGODB_DB_NAME
+        - name: BUCKET_VIDEOS_NAME
+          valueFrom:
+            secretKeyRef:
+              name: fiap-x-job-creator-app-secrets
+              key: BUCKET_VIDEOS_NAME
+        - name: BUCKET_IMAGES_ZIP_NAME
+          valueFrom:
+            secretKeyRef:
+              name: fiap-x-job-creator-app-secrets
+              key: BUCKET_IMAGES_ZIP_NAME
         resources:
           requests:
             memory: "256Mi"
             cpu: "100m"
           limits:
             memory: "512Mi"
-            cpu: "100m" 
+            cpu: "100m"

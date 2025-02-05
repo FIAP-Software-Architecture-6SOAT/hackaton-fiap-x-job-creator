@@ -2,15 +2,43 @@
     "name": "fiap-x-job-creator",
     "version": "1.0.0",
     "description": "fiap-x-job-creator",
-    "type": "module",
-    "main": "src/index.js",
     "scripts": {
-        "start": "node src/index.js"
+        "start": "tsx src/index.ts",
+        "test": "jest --config jest.config.ts",
+        "test:detect-open-handles": "jest --config jest.config.ts --detectOpenHandles",
+        "test:watch": "jest --config jest.config.ts --watch",
+        "test:coverage": "jest --config jest.config.ts --coverage",
+        "ci:test": ".scripts/ci_test_coverage.sh"
     },
     "dependencies": {
         "@aws-sdk/client-eks": "^3.731.1",
         "@aws-sdk/client-sqs": "^3.731.1",
-        "@kubernetes/client-node": "^1.0.0"
+        "@jest/globals": "^29.7.0",
+        "@kubernetes/client-node": "^1.0.0",
+        "pino": "^9.0.0",
+        "pino-pretty": "^11.0.0"
     },
-    "author": "Danilo Cassola"
+    "devDependencies": {
+        "@babel/plugin-syntax-decorators": "^7.25.9",
+        "@babel/preset-env": "7.22.4",
+        "@babel/preset-typescript": "7.21.5",
+        "@types/jest": "^29.5.13",
+        "@types/node": "^22.10.7",
+        "@typescript-eslint/eslint-plugin": "^6.13.2",
+        "@typescript-eslint/parser": "^6.13.2",
+        "eslint": "8.43.0",
+        "eslint-config-airbnb-base": "15.0.0",
+        "eslint-config-airbnb-typescript": "17.1.0",
+        "eslint-config-prettier": "9.0.0",
+        "eslint-import-resolver-typescript": "^3.6.1",
+        "eslint-plugin-import": "^2.29.0",
+        "eslint-plugin-prettier": "4.2.1",
+        "eslint-plugin-simple-import-sort": "10.0.0",
+        "jest": "^29.7.0",
+        "prettier": "2.8.8",
+        "ts-jest": "^29.2.5",
+        "ts-node": "^10.9.2",
+        "tsx": "^4.16.2",
+        "typescript": "^5.5.3"
+    }
 }
