@@ -1,0 +1,19 @@
+services:
+  fiap-x-job-creator:
+    build: .
+    volumes:
+      - .:/app/src
+    working_dir: /app/src
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN}
+      - AWS_ACCESS_KEY_ID_SES=${AWS_ACCESS_KEY_ID_SES}
+      - AWS_SECRET_ACCESS_KEY_SES=${AWS_SECRET_ACCESS_KEY_SES}
+      - MONGODB_CONNECTION_STRING=${MONGODB_CONNECTION_STRING}
+      - MONGODB_DB_NAME=${MONGODB_DB_NAME}
+      - QUEUE_URL=${QUEUE_URL}
+      - BUCKET_VIDEOS_NAME=${BUCKET_VIDEOS_NAME}
+      - BUCKET_IMAGES_ZIP_NAME=${BUCKET_IMAGES_ZIP_NAME}
+    env_file:
+      - .env
